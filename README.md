@@ -5,15 +5,9 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/designbycode/laravel-datatables/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/designbycode/laravel-datatables/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/designbycode/laravel-datatables.svg?style=flat-square)](https://packagist.org/packages/designbycode/laravel-datatables)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This package is the backend implementation for creating datatables for Laravel modal.
 
-## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-datatables.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-datatables)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Installation
 
@@ -23,24 +17,10 @@ You can install the package via composer:
 composer require designbycode/laravel-datatables
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-datatables-migrations"
-php artisan migrate
-```
-
 You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="laravel-datatables-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
 ```
 
 Optionally, you can publish the views using
@@ -52,8 +32,43 @@ php artisan vendor:publish --tag="laravel-datatables-views"
 ## Usage
 
 ```php
-$datatables = new Designbycode\Datatables();
-echo $datatables->echoPhrase('Hello, Designbycode!');
+
+use Designbycode\Datatables\DataTableController;
+
+class CategoriesDataTable extends DataTableController
+{
+    public function builder(): Builder
+    {
+        return Category::query();
+    }
+    
+}
+```
+
+## Use with InertiaJs
+
+
+```php 
+
+use Designbycode\Datatables\DataTableController;
+use Inertia\Inertia;
+use Inertia\Response;
+
+class CategoriesDataTable extends DataTableController
+{
+    public function builder(): Builder
+    {
+        return Category::query();
+    }
+    
+    public function index(): Response
+    {
+        return Inertia::render('Categories', )
+    }
+    
+}
+
+
 ```
 
 ## Testing

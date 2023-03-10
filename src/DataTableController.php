@@ -1,16 +1,16 @@
 <?php
 
-namespace Designbycode\Datatables\Http\Controllers;
+namespace Designbycode\Datatables;
 
 use Exception;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\QueryException;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
+
 
 abstract class DataTableController extends Controller implements Builder
 {
@@ -38,10 +38,18 @@ abstract class DataTableController extends Controller implements Builder
     /**
      * Entry point for application
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
-        return response()->json([
-            'data' => [
+        return response()->json($this->getResponseData($request));
+    }
+
+    /**
+     * @return array[]
+     */
+    public function getResponseData(Request $request): array
+    {
+        return [
+
                 'allow' => [
                     'creation' => $this->allowCreation,
                     'deletion' => $this->allowDeletion,
@@ -51,8 +59,8 @@ abstract class DataTableController extends Controller implements Builder
                 'displayable' => array_values($this->getDisplayableColumns()),
                 'updatable' => array_values($this->getUpdatableColumns()),
                 'records' => $this->getRecords($request),
-            ],
-        ]);
+
+        ];
     }
 
     /**
@@ -124,7 +132,7 @@ abstract class DataTableController extends Controller implements Builder
     /**
      * Get list of data from model
      */
-    private function getRecords(Request $request): Collection
+    protected function getRecords(Request $request): Collection
     {
         $builder = $this->builder;
 
