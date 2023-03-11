@@ -132,7 +132,7 @@ abstract class DataTableController extends Controller implements Builder
     /**
      * Get list of data from model
      */
-    protected function getRecords(Request $request): Collection
+    public function getRecords(Request $request): Collection
     {
         $builder = $this->builder;
 
