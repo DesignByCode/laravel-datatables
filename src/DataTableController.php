@@ -11,7 +11,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
-
 abstract class DataTableController extends Controller implements Builder
 {
     protected bool $allowCreation = true;
@@ -50,15 +49,15 @@ abstract class DataTableController extends Controller implements Builder
     {
         return [
 
-                'allow' => [
-                    'creation' => $this->allowCreation,
-                    'deletion' => $this->allowDeletion,
-                ],
-                'custom_columns' => $this->getCustomColumnNames(),
-                'table' => $this->tableName ?? $this->builder->getModel()->getTable(),
-                'displayable' => array_values($this->getDisplayableColumns()),
-                'updatable' => array_values($this->getUpdatableColumns()),
-                'records' => $this->getRecords($request),
+            'allow' => [
+                'creation' => $this->allowCreation,
+                'deletion' => $this->allowDeletion,
+            ],
+            'custom_columns' => $this->getCustomColumnNames(),
+            'table' => $this->tableName ?? $this->builder->getModel()->getTable(),
+            'displayable' => array_values($this->getDisplayableColumns()),
+            'updatable' => array_values($this->getUpdatableColumns()),
+            'records' => $this->getRecords($request),
 
         ];
     }
